@@ -1,0 +1,27 @@
+# dependencies and package output
+node_modules/
+dist/
+release/
+
+# test and preview artifacts
+shots/
+demo-audio/
+*.log
+*.tsbuildinfo
+
+# Android / Gradle generated files
+android/.gradle/
+android/build/
+android/app/build/
+android/capacitor-cordova-android-plugins/build/
+android/local.properties
+android/keystore.properties
+android/keystore/*.jks
+android/keystore/*.keystore
+
+# local tooling
+.idea/
+*.iml
+.vscode/
+.DS_Store
+Thumbs.db
