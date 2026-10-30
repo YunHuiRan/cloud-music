@@ -119,7 +119,7 @@ export function PlayerBar({ onOpenQueue }: PlayerBarProps) {
             aria-label="随机播放当前列表"
             aria-pressed={shuffle}
           >
-            <Shuffle size={16} />
+            <Shuffle size={21} />
           </button>
           <button
             type="button"
@@ -129,7 +129,7 @@ export function PlayerBar({ onOpenQueue }: PlayerBarProps) {
             title="上一首"
             aria-label="上一首"
           >
-            <SkipBack size={19} fill="currentColor" />
+            <SkipBack size={22} fill="currentColor" />
           </button>
           <button
             type="button"
@@ -140,11 +140,11 @@ export function PlayerBar({ onOpenQueue }: PlayerBarProps) {
             aria-label={isPlaying ? "暂停" : "播放"}
           >
             {isLoading ? (
-              <Loader2 size={19} className="spin" />
+              <Loader2 size={24} className="spin" />
             ) : isPlaying ? (
-              <Pause size={19} fill="currentColor" />
+              <Pause size={24} fill="currentColor" />
             ) : (
-              <Play size={19} fill="currentColor" className="play-offset" />
+              <Play size={24} fill="currentColor" className="play-offset" />
             )}
           </button>
           <button
@@ -155,7 +155,7 @@ export function PlayerBar({ onOpenQueue }: PlayerBarProps) {
             title="下一首"
             aria-label="下一首"
           >
-            <SkipForward size={19} fill="currentColor" />
+            <SkipForward size={22} fill="currentColor" />
           </button>
           <button
             type="button"
@@ -167,7 +167,7 @@ export function PlayerBar({ onOpenQueue }: PlayerBarProps) {
             aria-label="顺序播放当前列表"
             aria-pressed={!shuffle}
           >
-            <ListOrdered size={16} />
+            <ListOrdered size={21} />
           </button>
           <button
             type="button"
@@ -184,7 +184,7 @@ export function PlayerBar({ onOpenQueue }: PlayerBarProps) {
             }
             aria-label="切换循环模式"
           >
-            {repeat === "one" ? <Repeat1 size={16} /> : <Repeat size={16} />}
+            {repeat === "one" ? <Repeat1 size={20} /> : <Repeat size={20} />}
           </button>
         </div>
 
@@ -253,7 +253,7 @@ export function PlayerBar({ onOpenQueue }: PlayerBarProps) {
           title="播放队列"
           aria-label="播放队列"
         >
-          <ListMusic size={18} />
+          <ListMusic size={22} />
         </button>
       </div>
     </footer>

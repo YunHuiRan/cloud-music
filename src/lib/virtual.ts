@@ -1,8 +1,8 @@
 import { useEffect, useState, type RefObject } from "react";
 
-const MIN_VIRTUAL_COUNT = 160;
+const MIN_VIRTUAL_COUNT = 60;
 const OVERSCAN = 7;
-const DEFAULT_ROW_HEIGHT = 58;
+const DEFAULT_ROW_HEIGHT = 66;
 
 export interface VirtualRows {
   start: number;

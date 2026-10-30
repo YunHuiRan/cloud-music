@@ -67,7 +67,11 @@ public class PlaybackService extends Service {
         canPrev = nextCanPrev;
 
         if (instance != null) {
-            instance.applyState();
+            try {
+                instance.applyState();
+            } catch (Exception ignored) {
+                // Never let a notification/MediaSession glitch crash playback.
+            }
             return;
         }
 
@@ -176,7 +180,13 @@ public class PlaybackService extends Service {
             return START_STICKY;
         }
 
-        applyState();
+        try {
+            applyState();
+        } catch (Exception ignored) {
+            // If the OS refuses the foreground notification, stop cleanly.
+            stopSelf();
+            return START_NOT_STICKY;
+        }
         return START_STICKY;
     }
 
@@ -286,9 +296,6 @@ public class PlaybackService extends Service {
                     .setShowActionsInCompactView(0, 1, 2)
             );
 
-        if (!canPrev) {
-            builder.setCustomBigContentView(null);
-        }
         return builder.build();
     }
 

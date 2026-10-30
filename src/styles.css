@@ -1086,8 +1086,8 @@ p {
   grid-template-columns: 30px 48px minmax(0, 1fr) 56px 96px;
   gap: 10px;
   align-items: center;
-  min-height: 58px;
-  padding: 6px 9px;
+  min-height: 62px;
+  padding: 8px 9px;
   border-radius: 9px;
   cursor: default;
   transition:
@@ -2050,9 +2050,16 @@ p {
     inset 0 0 0 1px rgba(255, 255, 255, 0.12);
 }
 
-.player-bar.is-android .player-track .artwork,
-.player-bar.is-android .player-artwork-placeholder {
+.player-bar.is-android .player-track {
   display: none;
+}
+
+.player-bar.is-android .player-center {
+  grid-column: 2;
+}
+
+.player-bar.is-android .player-side {
+  grid-column: 3;
 }
 
 .player-artwork-placeholder {
@@ -2562,7 +2569,7 @@ p {
   }
 
   :root.android {
-    --player-h: 84px;
+    --player-h: 88px;
   }
 
   body {
@@ -2669,20 +2676,12 @@ p {
   }
 
   .player-bar.is-android {
-    gap: 4px;
-    padding: 2px 10px 0;
-  }
-
-  .player-bar.is-android .player-title {
-    font-size: 14px;
-  }
-
-  .player-bar.is-android .player-artists {
-    font-size: 11.5px;
+    gap: 8px;
+    padding: 4px 12px 0;
   }
 
   .player-bar.is-android .transport {
-    gap: 3px;
+    gap: 4px;
   }
 
   .player-bar.is-android .transport-small {
@@ -2690,12 +2689,20 @@ p {
   }
 
   .player-bar.is-android .transport-small.transport-mode {
-    width: 32px;
-    height: 36px;
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 40px;
+    padding: 0;
+    line-height: 0;
+  }
+
+  .player-bar.is-android .transport-mode svg {
+    display: block;
   }
 
   .player-bar.is-android .transport-small.is-active {
-    border-radius: 8px;
+    border-radius: 10px;
     background: var(--accent-soft);
     color: var(--accent);
   }
@@ -2705,20 +2712,20 @@ p {
   }
 
   .player-bar.is-android .transport-skip {
-    width: 38px;
-    height: 38px;
+    width: 42px;
+    height: 42px;
     color: var(--text-2);
   }
 
   .player-bar.is-android .play-button {
-    width: 48px;
-    height: 48px;
+    width: 54px;
+    height: 54px;
     margin: 0 2px;
   }
 
   .player-bar.is-android .player-side .icon-button {
-    width: 36px;
-    height: 36px;
+    width: 40px;
+    height: 40px;
   }
 
   .player-center {
@@ -2955,10 +2962,10 @@ p {
   }
 
   .track-row {
-    grid-template-columns: 24px minmax(0, 1fr) 42px 74px;
+    grid-template-columns: 24px minmax(0, 1fr) 42px 78px;
     gap: 8px;
-    min-height: 55px;
-    padding: 6px;
+    min-height: 66px;
+    padding: 9px 6px;
   }
 
   .row-artwork {
@@ -2966,16 +2973,21 @@ p {
   }
 
   .row-title {
-    font-size: 13.5px;
+    font-size: 14.5px;
+  }
+
+  .row-artists {
+    margin-top: 3px;
+    font-size: 12.5px;
   }
 
   .row-actions {
-    gap: 0;
+    gap: 1px;
   }
 
   .row-action {
-    width: 26px;
-    height: 26px;
+    width: 28px;
+    height: 28px;
   }
 
   .artist-link {
@@ -3621,4 +3633,16 @@ p {
   .volume-button {
     display: none;
   }
+}
+
+/* WebView compositing is much cheaper with solid bars on Android. */
+html.android .player-bar,
+html.android .mobile-nav {
+  background: var(--surface-solid);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+html.android .track-list {
+  box-shadow: none;
 }
