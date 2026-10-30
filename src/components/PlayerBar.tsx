@@ -1,20 +1,15 @@
 import type { CSSProperties } from "react";
+import { Heart, ListMusic, Loader2, Repeat, Repeat1, Volume2, VolumeX } from "lucide-react";
 import {
-  Heart,
-  ListMusic,
-  ListOrdered,
-  Loader2,
-  LocateFixed,
-  Pause,
-  Play,
-  Repeat,
-  Repeat1,
-  Shuffle,
-  SkipBack,
-  SkipForward,
-  Volume2,
-  VolumeX,
-} from "lucide-react";
+  LocateGlyph,
+  NextGlyph,
+  OrderGlyph,
+  PauseGlyph,
+  PlayGlyph,
+  PreviousGlyph,
+  QueueGlyph,
+  ShuffleGlyph,
+} from "./TransportGlyphs";
 import { useLibrary } from "../lib/store";
 import { usePlayer } from "../lib/player";
 import { isAndroidApp } from "../lib/android-shell";
@@ -109,6 +104,18 @@ export function PlayerBar({ onOpenQueue }: PlayerBarProps) {
       <div className="player-center">
         <div className="transport">
           <span className="transport-spacer" aria-hidden="true" />
+          {android && (
+            <button
+              type="button"
+              className="icon-button transport-locate"
+              onClick={() => locateCurrent(currentId)}
+              disabled={!track}
+              title="定位正在播放的歌曲"
+              aria-label="定位正在播放的歌曲"
+            >
+              <LocateGlyph size={23} />
+            </button>
+          )}
           <button
             type="button"
             className={`icon-button transport-small transport-mode ${
@@ -119,7 +126,7 @@ export function PlayerBar({ onOpenQueue }: PlayerBarProps) {
             aria-label="随机播放当前列表"
             aria-pressed={shuffle}
           >
-            <Shuffle size={21} />
+            <ShuffleGlyph size={21} />
           </button>
           <button
             type="button"
@@ -129,7 +136,7 @@ export function PlayerBar({ onOpenQueue }: PlayerBarProps) {
             title="上一首"
             aria-label="上一首"
           >
-            <SkipBack size={22} fill="currentColor" />
+            <PreviousGlyph size={23} />
           </button>
           <button
             type="button"
@@ -140,11 +147,11 @@ export function PlayerBar({ onOpenQueue }: PlayerBarProps) {
             aria-label={isPlaying ? "暂停" : "播放"}
           >
             {isLoading ? (
-              <Loader2 size={24} className="spin" />
+              <Loader2 size={26} className="spin" />
             ) : isPlaying ? (
-              <Pause size={24} fill="currentColor" />
+              <PauseGlyph size={26} />
             ) : (
-              <Play size={24} fill="currentColor" className="play-offset" />
+              <PlayGlyph size={26} className="play-offset" />
             )}
           </button>
           <button
@@ -155,7 +162,7 @@ export function PlayerBar({ onOpenQueue }: PlayerBarProps) {
             title="下一首"
             aria-label="下一首"
           >
-            <SkipForward size={22} fill="currentColor" />
+            <NextGlyph size={23} />
           </button>
           <button
             type="button"
@@ -167,8 +174,19 @@ export function PlayerBar({ onOpenQueue }: PlayerBarProps) {
             aria-label="顺序播放当前列表"
             aria-pressed={!shuffle}
           >
-            <ListOrdered size={21} />
+            <OrderGlyph size={21} />
           </button>
+          {android && (
+            <button
+              type="button"
+              className="icon-button transport-queue"
+              onClick={onOpenQueue}
+              title="播放队列"
+              aria-label="播放队列"
+            >
+              <QueueGlyph size={21} />
+            </button>
+          )}
           <button
             type="button"
             className={`icon-button transport-small transport-repeat ${
@@ -244,7 +262,7 @@ export function PlayerBar({ onOpenQueue }: PlayerBarProps) {
           aria-label="定位正在播放的歌曲"
           disabled={!track}
         >
-          <LocateFixed size={17} />
+          <LocateGlyph size={19} />
         </button>
         <button
           type="button"
@@ -253,7 +271,7 @@ export function PlayerBar({ onOpenQueue }: PlayerBarProps) {
           title="播放队列"
           aria-label="播放队列"
         >
-          <ListMusic size={22} />
+          <QueueGlyph size={22} />
         </button>
       </div>
     </footer>

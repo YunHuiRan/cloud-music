@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Check, Heart, Pause, Play, Plus, X } from "lucide-react";
 import type { Track } from "../types";
+import { isAndroidApp } from "../lib/android-shell";
 import { useLibrary } from "../lib/store";
 import { usePlayer } from "../lib/player";
 import { useTrackDuration } from "../lib/duration";
@@ -8,6 +9,8 @@ import { useFlip } from "../lib/flip";
 import { formatTime } from "../lib/format";
 import { useVirtualRows } from "../lib/virtual";
 import { Artwork } from "./Artwork";
+import { MoreGlyph } from "./TransportGlyphs";
+import { TrackActionSheet } from "./TrackActionSheet";
 
 interface TrackRowProps {
   track: Track;
@@ -16,6 +19,7 @@ interface TrackRowProps {
   onArtistClick: (artist: string) => void;
   onAdd: (track: Track) => void;
   onRemove?: (track: Track) => void;
+  removeLabel?: string;
   selectable?: boolean;
   selected?: boolean;
   locating?: boolean;
@@ -40,6 +44,7 @@ function TrackRow({
   onArtistClick,
   onAdd,
   onRemove,
+  removeLabel,
   selectable = false,
   selected = false,
   locating = false,
@@ -50,8 +55,11 @@ function TrackRow({
   const isLiked = useLibrary((state) => state.liked.includes(track.id));
   const toggleLike = useLibrary((state) => state.toggleLike);
   const { duration, ref } = useTrackDuration(track);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const android = isAndroidApp();
 
   return (
+    <>
     <div
       ref={ref}
       className={`track-row ${isCurrent ? "is-current" : ""} ${
@@ -124,49 +132,80 @@ function TrackRow({
       <div className="row-duration">{duration > 0 ? formatTime(duration) : "–"}</div>
 
       <div className="row-actions">
-        <button
-          type="button"
-          className={`icon-button row-action ${isLiked ? "is-liked" : ""}`}
-          onClick={(event) => {
-            event.stopPropagation();
-            toggleLike(track.id);
-          }}
-          onKeyDown={(event) => event.stopPropagation()}
-          aria-label={isLiked ? "取消喜欢" : "喜欢这首歌"}
-          title={isLiked ? "取消喜欢" : "喜欢"}
-        >
-          <Heart size={16} fill={isLiked ? "currentColor" : "none"} />
-        </button>
-        <button
-          type="button"
-          className="icon-button row-action"
-          onClick={(event) => {
-            event.stopPropagation();
-            onAdd(track);
-          }}
-          onKeyDown={(event) => event.stopPropagation()}
-          aria-label="添加到歌单"
-          title="添加到歌单"
-        >
-          <Plus size={17} />
-        </button>
-        {onRemove && (
+        {android ? (
           <button
             type="button"
-            className="icon-button row-action"
+            className="row-menu-button"
             onClick={(event) => {
               event.stopPropagation();
-              onRemove(track);
+              setMenuOpen(true);
             }}
             onKeyDown={(event) => event.stopPropagation()}
-            aria-label="从这个歌单移除"
-            title="从歌单移除"
+            aria-label="更多操作"
+            aria-haspopup="menu"
+            title="更多操作"
           >
-            <X size={16} />
+            <MoreGlyph size={20} />
           </button>
+        ) : (
+          <>
+            <button
+              type="button"
+              className={`icon-button row-action ${isLiked ? "is-liked" : ""}`}
+              onClick={(event) => {
+                event.stopPropagation();
+                toggleLike(track.id);
+              }}
+              onKeyDown={(event) => event.stopPropagation()}
+              aria-label={isLiked ? "取消喜欢" : "喜欢这首歌"}
+              title={isLiked ? "取消喜欢" : "喜欢"}
+            >
+              <Heart size={16} fill={isLiked ? "currentColor" : "none"} />
+            </button>
+            <button
+              type="button"
+              className="icon-button row-action"
+              onClick={(event) => {
+                event.stopPropagation();
+                onAdd(track);
+              }}
+              onKeyDown={(event) => event.stopPropagation()}
+              aria-label="添加到歌单"
+              title="添加到歌单"
+            >
+              <Plus size={17} />
+            </button>
+            {onRemove && (
+              <button
+                type="button"
+                className="icon-button row-action"
+                onClick={(event) => {
+                  event.stopPropagation();
+                  onRemove(track);
+                }}
+                onKeyDown={(event) => event.stopPropagation()}
+                aria-label="从这个歌单移除"
+                title="从歌单移除"
+              >
+                <X size={16} />
+              </button>
+            )}
+          </>
         )}
       </div>
     </div>
+    {android && menuOpen && (
+      <TrackActionSheet
+        track={track}
+        liked={isLiked}
+        onClose={() => setMenuOpen(false)}
+        onToggleLike={() => toggleLike(track.id)}
+        onAdd={() => onAdd(track)}
+        onRemove={onRemove ? () => onRemove(track) : undefined}
+        removeLabel={removeLabel}
+      />
+    )}
+    </>
   );
 }
 
@@ -175,6 +214,7 @@ interface TrackListProps {
   onArtistClick: (artist: string) => void;
   onAdd: (track: Track) => void;
   onRemove?: (track: Track) => void;
+  removeLabel?: string;
   selectable?: boolean;
   selectedIds?: ReadonlySet<string>;
   onSelect?: (track: Track) => void;
@@ -185,6 +225,7 @@ export function TrackList({
   onArtistClick,
   onAdd,
   onRemove,
+  removeLabel,
   selectable,
   selectedIds,
   onSelect,
@@ -260,6 +301,7 @@ export function TrackList({
           onArtistClick={onArtistClick}
           onAdd={onAdd}
           onRemove={onRemove}
+          removeLabel={removeLabel}
           selectable={selectable}
           selected={selectedIds?.has(track.id)}
           locating={track.id === locatingId}

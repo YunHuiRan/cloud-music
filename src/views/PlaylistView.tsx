@@ -193,6 +193,7 @@ export function PlaylistView({
             removeFromPlaylist(playlist.id, track.id);
             toast(`已从「${playlist.name}」移除`);
           }}
+          removeLabel="从歌单移除"
         />
       )}
 

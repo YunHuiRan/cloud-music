@@ -253,6 +253,7 @@ export function LibraryView({
           onArtistClick={onArtistClick}
           onAdd={onAdd}
           onRemove={(track) => remove([track.id], track.title)}
+          removeLabel="从曲库移除"
           selectable={selecting}
           selectedIds={selected}
           onSelect={toggleSelected}
