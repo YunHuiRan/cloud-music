@@ -206,10 +206,7 @@ export function Topbar({
         </div>
       )}
 
-      <div
-        className="topbar-actions"
-        style={{ position: "absolute", right: "0px" }}
-      >
+      <div className="topbar-actions">
         <button
           type="button"
           className="icon-button theme-button"

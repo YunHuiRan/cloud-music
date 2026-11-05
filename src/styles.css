@@ -5329,6 +5329,9 @@ button:focus:not(:focus-visible),
   align-items: center;
   gap: 10px;
   margin-left: auto;
+  /* Desktop window controls sit flush with the top-right corner. */
+  position: absolute;
+  right: 0;
 }
 
 .window-controls {
@@ -7359,4 +7362,19 @@ html.android .player-islands .player-control-group .mode-buttons .mode-button:ho
 /* 1.2.7: the control island keeps its own glass edge; the sheen overlay reads as a pill around the first mode button on Android. */
 html.android .player-islands .player-control-group > .liquid-sheen {
   display: none;
+}
+
+/* 1.2.8: Android topbar — shorter search pill and the theme toggle inset from the edge. */
+html.android .search-field,
+:root.android .search-field {
+  flex: 0 1 auto;
+  width: min(66vw, 300px);
+  margin-right: 0;
+}
+
+html.android .topbar-actions,
+:root.android .topbar-actions {
+  position: static;
+  right: auto;
+  margin-right: 8px;
 }

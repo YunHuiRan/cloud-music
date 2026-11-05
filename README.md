@@ -154,8 +154,8 @@ release/Cloud-Music-Android-1.2.1-liquid.apk
 
 | 平台 | 文件 | 大小 | SHA-256 |
 | --- | --- | ---: | --- |
-| Windows x64 | `release/Cloud-Music-Setup-1.2.1.exe` | 94,390,117 B | `A8BDE58596EE5B939ACD9E53C70C2C3858096CC3FF3904BD94830C36CD896E45` |
-| Android | `release/Cloud-Music-Android-1.2.1-liquid.apk` | 3,325,429 B | `94DE1B25FE6B89DE56FF1F8A9724B15D2E36A99EB3F8D86B3ACAFDA5B05228D8` |
+| Windows x64 | `release/Cloud-Music-Setup-1.2.1.exe` | 94,390,248 B | `C66134408716F7481A65C79FC046FAFE4C219D3AC832935026A9B302665FD5F7` |
+| Android | `release/Cloud-Music-Android-1.2.1-liquid.apk` | 3,325,429 B | `CBE09BE9270980178E12C844130A153DB12393D38684D0C3A3FC3B71C4994CEB` |
 
 同样的值记录在 `release/SHA256SUMS.txt`。APK 的 `versionCode` 为 4，`versionName` 为 1.2.1，`minSdk` 24，`targetSdk` 36。
 
